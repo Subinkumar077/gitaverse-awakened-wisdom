@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Language } from 'lucide-react';
+import { Languages } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -36,7 +36,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           size="sm" 
           className={`ripple bg-gradient-to-r from-blue-100 to-indigo-100 hover:from-blue-200 hover:to-indigo-200 border-blue-200 text-blue-800 ${className}`}
         >
-          <Language className="h-4 w-4 mr-2" />
+          <Languages className="h-4 w-4 mr-2" />
           <span className="text-xs font-medium">{languageNames[currentLanguage]}</span>
         </Button>
       </DropdownMenuTrigger>

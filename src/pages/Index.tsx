@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Bookmark, Search } from 'lucide-react';
 import Header from '@/components/Header';
 import DailyShloka from '@/components/DailyShloka';
 import ShlokaCard from '@/components/ShlokaCard';
