@@ -1,4 +1,3 @@
-
 export interface Shloka {
   id: string;
   chapter: number;
@@ -10,67 +9,58 @@ export interface Shloka {
     hindi: string;
     hinglish: string;
   };
-  wordMeanings: Array<{
-    word: string;
-    meaning: string;
-  }>;
+  wordMeanings?: { word: string; meaning: string }[];
   aiExplanation?: {
-    simple: string;
-    realLife: string;
-    spiritual: string;
+    short: string;
+    long: string;
   };
 }
 
+export const searchShlokas = (query: string): Shloka[] => {
+  const searchTerm = query.toLowerCase();
+  return shlokas.filter((shloka) => {
+    return (
+      shloka.sanskrit.toLowerCase().includes(searchTerm) ||
+      shloka.transliteration.toLowerCase().includes(searchTerm) ||
+      shloka.translations.english.toLowerCase().includes(searchTerm) ||
+      shloka.translations.hindi.toLowerCase().includes(searchTerm) ||
+      shloka.translations.hinglish.toLowerCase().includes(searchTerm) ||
+      `${shloka.chapter}.${shloka.verse}`.includes(searchTerm)
+    );
+  });
+};
+
 export const popularShlokas: Shloka[] = [
-  {
-    id: "1.1",
-    chapter: 1,
-    verse: 1,
-    sanskrit: "धृतराष्ट्र उवाच | धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः | मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय ||",
-    transliteration: "dhṛtarāṣṭra uvāca | dharma-kṣetre kuru-kṣetre samavetā yuyutsavaḥ | māmakāḥ pāṇḍavāś caiva kim akurvata sañjaya ||",
-    translations: {
-      english: "Dhritarashtra said: O Sanjaya, after my sons and the sons of Pandu assembled in the place of pilgrimage at Kurukshetra, desiring to fight, what did they do?",
-      hindi: "धृतराष्ट्र ने कहा: हे संजय! धर्मक्षेत्र कुरुक्षेत्र में एकत्रित हुए, युद्ध की इच्छा वाले मेरे और पांडु के पुत्रों ने क्या किया?",
-      hinglish: "Dhritarashtra ne kaha: Ae Sanjaya! Dharmakshetra Kurukshetra mein ekatrit hue, yuddh ki ichha wale mere aur Pandu ke putron ne kya kiya?"
-    },
-    wordMeanings: [
-      { word: "धृतराष्ट्र", meaning: "Dhritarashtra (blind king)" },
-      { word: "उवाच", meaning: "said" },
-      { word: "धर्मक्षेत्रे", meaning: "in the place of righteousness" },
-      { word: "कुरुक्षेत्रे", meaning: "in the field of Kurus" },
-      { word: "समवेताः", meaning: "assembled" },
-      { word: "युयुत्सवः", meaning: "desiring to fight" }
-    ],
-    aiExplanation: {
-      simple: "This is the very first verse of the Bhagavad Gita. The blind king Dhritarashtra asks his minister Sanjaya about what happened when both armies gathered at Kurukshetra for battle.",
-      realLife: "Like a worried parent asking about their children's activities, Dhritarashtra represents our anxious mind that wants to know outcomes before they happen. This teaches us that uncertainty is part of life.",
-      spiritual: "Kurukshetra represents the battlefield of life where we all face moral dilemmas. The 'field of dharma' symbolizes that life's challenges are opportunities for spiritual growth."
-    }
-  },
   {
     id: "2.13",
     chapter: 2,
     verse: 13,
     sanskrit: "देहिनोऽस्मिन्यथा देहे कौमारं यौवनं जरा | तथा देहान्तरप्राप्तिर्धीरस्तत्र न मुह्यति ||",
-    transliteration: "dehino 'smin yathā dehe kaumāraṁ yauvanaṁ jarā | tathā dehāntara-prāptir dhīras tatra na muhyati ||",
+    transliteration: "dehino 'smin yathā dehe kaumāraṁ yauvanaṁ jarā tathā dehāntara-prāptir dhīras tatra na muhyati",
     translations: {
       english: "As the embodied soul continuously passes, in this body, from boyhood to youth to old age, the soul similarly passes into another body at death. A sober person is not bewildered by such a change.",
-      hindi: "जैसे जीवात्मा इस शरीर में बालपन से युवावस्था और वृद्धावस्था में निरन्तर अग्रसर होता है, वैसे ही मृत्यु के समय आत्मा दूसरे शरीर में प्रवेश करता है। धीर पुरुष ऐसे परिवर्तन से मोह को प्राप्त नहीं होता।",
-      hinglish: "Jaise jeevatma is shareer mein balpan se yuvaavastha aur vriddhaavastha mein nirantar agrasar hota hai, vaise hi mrityu ke samay aatma doosre shareer mein pravesh karta hai. Dheer purush aise parivartan se moh ko prapt nahin hota."
+      hindi: "जैसे जीवात्मा इस देह में बालपन से युवावस्था और वृद्धावस्था में निरन्तर अग्रसर होता है, वैसे ही मृत्यु के समय वह दूसरे देह में जाता है। धीर पुरुष ऐसे परिवर्तन से मोह को प्राप्त नहीं होता।",
+      hinglish: "Jaise ek insaan apne shareer mein bachpan se jawaani aur budhape mein badalta hai, waise hi aatma maut ke baad doosre shareer mein chali jaati hai. Buddhiman log isse dukhi nahi hote."
     },
     wordMeanings: [
-      { word: "देहिनः", meaning: "of the embodied" },
-      { word: "अस्मिन्", meaning: "in this" },
-      { word: "यथा", meaning: "as" },
-      { word: "देहे", meaning: "in the body" },
-      { word: "कौमारम्", meaning: "boyhood" },
-      { word: "यौवनम्", meaning: "youth" },
-      { word: "जरा", meaning: "old age" }
+      { word: "dehinaḥ", meaning: "of the embodied" },
+      { word: "asmin", meaning: "in this" },
+      { word: "yathā", meaning: "as" },
+      { word: "dehe", meaning: "in the body" },
+      { word: "kaumāram", meaning: "boyhood" },
+      { word: "yauvanam", meaning: "youth" },
+      { word: "jarā", meaning: "old age" },
+      { word: "tathā", meaning: "similarly" },
+      { word: "dehāntara", meaning: "transference of the body" },
+      { word: "prāptiḥ", meaning: "achievement" },
+      { word: "dhīraḥ", meaning: "the sober" },
+      { word: "tatra", meaning: "thereupon" },
+      { word: "na", meaning: "never" },
+      { word: "muhyati", meaning: "is deluded" }
     ],
     aiExplanation: {
-      simple: "Just as a person goes through different stages of life in one lifetime, similarly, the soul moves to another body after death. Wise people are not deluded by this change.",
-      realLife: "This verse teaches us to accept change as a natural part of life. Just as we grow from childhood to adulthood, we should understand that death is another transition, not an end.",
-      spiritual: "Understanding the eternal nature of the soul helps us overcome the fear of death and focus on our spiritual growth. It encourages us to live in the present without being attached to the temporary."
+      short: "This verse explains the concept of reincarnation and the continuous change of the soul from one body to another.",
+      long: "In this shloka, Lord Krishna explains to Arjuna the eternal nature of the soul and the process of reincarnation. Just as a person experiences different stages of life in a single lifetime—from childhood to youth to old age—the soul similarly transmigrates from one body to another at the time of death. A wise person, understanding this natural process, is not bewildered or distressed by the change of body. This understanding encourages one to focus on the eternal soul rather than the temporary physical body."
     }
   },
   {
@@ -78,25 +68,33 @@ export const popularShlokas: Shloka[] = [
     chapter: 2,
     verse: 47,
     sanskrit: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन | मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ||",
-    transliteration: "karmaṇy-evādhikāras te mā phaleṣu kadācana | mā karma-phala-hetur bhūr mā te saṅgo 'stv akarmaṇi ||",
+    transliteration: "karmaṇy-evādhikāras te mā phaleṣu kadācana mā karma-phala-hetur bhūr mā te saṅgo ’stv akarmaṇi",
     translations: {
       english: "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action. Never consider yourself the cause of the results of your activities, and never be attached to not doing your duty.",
-      hindi: "तेरा कर्म करने में ही अधिकार है, उसके फलों में कभी नहीं। तू कर्मफल का हेतु मत बन और तेरी अकर्मण्यता में आसक्ति न हो।",
-      hinglish: "Tera karma karne mein hee adhikaar hai, uske phalon mein kabhee nahin. Too karmaphal ka hetu mat ban aur teree akarmanyata mein aasakti na ho."
+      hindi: "तेरा कर्म करने में ही अधिकार है, उसके फलों में कभी नहीं। इसलिए तू कर्मों के फल का हेतु मत बन और तेरी कर्म न करने में भी आसक्ति न हो।",
+      hinglish: "Tumhe sirf apne kartavya karne ka adhikar hai, uske falon ka nahi. Kabhi bhi apne aap ko apne karmo ke natijon ka karan mat samjho, aur kabhi bhi apna kartavya na karne mein mat judo."
     },
     wordMeanings: [
-      { word: "कर्मणि", meaning: "in action" },
-      { word: "एव", meaning: "certainly" },
-      { word: "अधिकारः", meaning: "right" },
-      { word: "ते", meaning: "your" },
-      { word: "मा", meaning: "not" },
-      { word: "फलेषु", meaning: "in the fruits" },
-      { word: "कदाचन", meaning: "at any time" }
+      { word: "karmaṇi", meaning: "in prescribed duties" },
+      { word: "eva", meaning: "certainly" },
+      { word: "adhikāraḥ", meaning: "right" },
+      { word: "te", meaning: "of you" },
+      { word: "mā", meaning: "never" },
+      { word: "phaleṣu", meaning: "in the fruits" },
+      { word: "kadācana", meaning: "at any time" },
+      { word: "mā", meaning: "never" },
+      { word: "karma-phala", meaning: "result of work" },
+      { word: "hetuḥ", meaning: "cause" },
+      { word: "bhūḥ", meaning: "become" },
+      { word: "mā", meaning: "never" },
+      { word: "te", meaning: "of you" },
+      { word: "saṅgaḥ", meaning: "attachment" },
+      { word: "astu", meaning: "be" },
+      { word: "akarmaṇi", meaning: "in not doing prescribed duties" }
     ],
     aiExplanation: {
-      simple: "You have the right to do your work, but don't worry about the results. Don't think you are the cause of the results, and don't be attached to not working.",
-      realLife: "This verse teaches us to focus on our efforts and not stress about the outcomes. Whether it's studying for a test or working on a project, do your best without being overly concerned about the results.",
-      spiritual: "By detaching from the fruits of our actions, we can find inner peace and focus on our spiritual growth. This verse encourages us to act selflessly and without ego."
+      short: "This verse emphasizes the importance of performing one's duty without attachment to the results.",
+      long: "This shloka is one of the most quoted verses from the Bhagavad Gita. Lord Krishna advises Arjuna to focus on performing his duties to the best of his ability, without being concerned about the outcomes. He should not act with the expectation of reward, nor should he be attached to inaction. The emphasis is on selfless action, performed with detachment and without ego. By doing so, one can avoid the cycle of karma and attain liberation."
     }
   },
   {
@@ -104,24 +102,29 @@ export const popularShlokas: Shloka[] = [
     chapter: 3,
     verse: 27,
     sanskrit: "प्रकृतेः क्रियमाणानि गुणैः कर्माणि सर्वशः | अहङ्कारविमूढात्मा कर्ताहमिति मन्यते ||",
-    transliteration: "prakṛteḥ kriyamāṇāni guṇaiḥ karmāṇi sarvaśaḥ | ahaṅkāra-vimūḍhātmā kartāham iti manyate ||",
+    transliteration: "prakṛteḥ kriyamāṇāni guṇaiḥ karmāṇi sarvaśaḥ ahaṅkāra-vimūḍhātmā kartāham iti manyate",
     translations: {
       english: "The bewildered spirit soul, under the influence of the three modes of material nature, thinks himself to be the doer of activities, which are in actuality carried out by nature.",
-      hindi: "वास्तव में सम्पूर्ण कर्म प्रकृति के गुणों द्वारा किये जाते हैं। अहंकार से मोहित आत्मा यह सोचता है कि वह कर्ता है।",
-      hinglish: "Vastav mein sampoorn karma prakriti ke gunon dwara kiye jate hain. Ahankar se mohit aatma yah sochata hai ki vah karta hai."
+      hindi: "वास्तव में समस्त कर्म प्रकृति के गुणों द्वारा किए जाते हैं। अहंकार से मोहित आत्मा यह मानती है कि मैं कर्ता हूँ।",
+      hinglish: "Asliyat mein, sabhi karm prakriti ke guno dwara kiye jaate hain. Ahankaar se mohit aatma yeh maanti hai ki main karta hoon."
     },
     wordMeanings: [
-      { word: "प्रकृतेः", meaning: "of material nature" },
-      { word: "क्रियमाणानि", meaning: "being done" },
-      { word: "गुणैः", meaning: "by the modes" },
-      { word: "कर्माणि", meaning: "activities" },
-      { word: "सर्वशः", meaning: "all kinds of" },
-      { word: "अहङ्कार", meaning: "false ego" }
+      { word: "prakṛteḥ", meaning: "of material nature" },
+      { word: "kriyamāṇāni", meaning: "being done" },
+      { word: "guṇaiḥ", meaning: "by the modes" },
+      { word: "karmāṇi", meaning: "activities" },
+      { word: "sarvaśaḥ", meaning: "all kinds of" },
+      { word: "ahaṅkāra", meaning: "false ego" },
+      { word: "vimūḍha", meaning: "bewildered" },
+      { word: "ātmā", meaning: "soul" },
+      { word: "kartā", meaning: "doer" },
+      { word: "aham", meaning: "I" },
+      { word: "iti", meaning: "thus" },
+      { word: "manyate", meaning: "thinks" }
     ],
     aiExplanation: {
-      simple: "All actions are actually performed by the modes of material nature. The one whose mind is deluded by ego thinks, 'I am the doer'.",
-      realLife: "Often, we take credit for successes without acknowledging the circumstances, support, and opportunities that contributed. This verse reminds us to stay humble and recognize the bigger picture.",
-      spiritual: "Understanding that nature (or divine will) is the ultimate doer helps us to let go of ego and pride. It encourages us to act with humility and gratitude."
+      short: "This verse explains how actions are performed by material nature, but the deluded soul identifies itself as the doer.",
+      long: "In this shloka, Lord Krishna clarifies that all actions are carried out by the modes of material nature (goodness, passion, and ignorance). However, the individual soul, deluded by ego, falsely believes itself to be the doer. This misconception arises from ignorance of the true nature of the self and its relationship with the material world. By understanding that nature is the actual performer of actions, one can become free from ego and act with detachment."
     }
   },
   {
@@ -133,20 +136,25 @@ export const popularShlokas: Shloka[] = [
     translations: {
       english: "Whenever and wherever there is a decline in religious practice, O descendant of Bharata, and a predominant rise of irreligion—at that time I descend Myself.",
       hindi: "हे भारत! जब-जब धर्म की हानि होती है और अधर्म की वृद्धि होती है, तब-तब मैं स्वयं ही अवतार लेता हूँ।",
-      hinglish: "He Bharat! Jab-jab dharma ki hani hoti hai aur adharma ki vriddhi hoti hai, tab-tab main swayam hi avatar leta hun."
+      hinglish: "Ae Bharat! Jab bhi dharma kamzor hota hai aur buraai badh jaati hai, tab main khud avatar lekar aata hun."
     },
     wordMeanings: [
-      { word: "यदा यदा", meaning: "whenever and wherever" },
-      { word: "हि", meaning: "certainly" },
-      { word: "धर्मस्य", meaning: "of religion" },
-      { word: "ग्लानिः", meaning: "decline" },
-      { word: "भवति", meaning: "becomes" },
-      { word: "भारत", meaning: "O descendant of Bharata" }
+      { word: "yadā yadā", meaning: "whenever and wherever" },
+      { word: "hi", meaning: "certainly" },
+      { word: "dharmasya", meaning: "of religion" },
+      { word: "glāniḥ", meaning: "decline" },
+      { word: "bhavati", meaning: "manifests" },
+      { word: "bhārata", meaning: "O descendant of Bharata" },
+      { word: "abhyutthānam", meaning: "predominance" },
+      { word: "adharmasya", meaning: "of irreligion" },
+      { word: "tadā", meaning: "at that time" },
+      { word: "ātmānam", meaning: "Myself" },
+      { word: "sṛjāmi", meaning: "I descend" },
+      { word: "aham", meaning: "I" }
     ],
     aiExplanation: {
-      simple: "Whenever there is a decline in righteousness and an increase in unrighteousness, I manifest Myself.",
-      realLife: "This verse gives hope in times of moral decline. It suggests that help and guidance will always be available when needed, whether through leaders, movements, or personal awakening.",
-      spiritual: "This is one of the most famous verses promising divine intervention to restore balance in the world. It reinforces the idea that good will ultimately triumph over evil."
+      short: "This verse explains the Lord's promise to incarnate whenever there is a decline in dharma and a rise in adharma.",
+      long: "In this shloka, Lord Krishna assures Arjuna (and humanity) that He will incarnate in every age whenever there is a decline in righteousness (dharma) and a rise in unrighteousness (adharma). The purpose of these incarnations is to protect the virtuous, destroy the wicked, and re-establish the principles of dharma. This promise provides hope and reassurance that divine intervention will always be present to restore balance in the world."
     }
   },
   {
@@ -158,20 +166,28 @@ export const popularShlokas: Shloka[] = [
     translations: {
       english: "Elevate yourself through the power of your mind, and not degrade yourself, for the mind can be the friend and also the enemy of the self.",
       hindi: "अपने द्वारा अपना उद्धार करे और अपने को नीचे न गिराए। नि:संदेह मन ही इस जीवात्मा का मित्र है और मन ही इसका शत्रु है।",
-      hinglish: "Apne dwara apna uddhar kare aur apne ko neeche na giraye. Ni:sandeh man hi is jeevatma ka mitra hai aur man hi iska shatru hai."
+      hinglish: "Apne aap ko upar uthao, neeche mat girao. Tumhara dimag tumhara sabse accha dost hai, aur sabse bada dushman bhi."
     },
     wordMeanings: [
-      { word: "उद्धरेत्", meaning: "one should elevate" },
-      { word: "आत्मना", meaning: "by the mind" },
-      { word: "आत्मानम्", meaning: "the self" },
-      { word: "न", meaning: "not" },
-      { word: "आत्मानम्", meaning: "the self" },
-      { word: "अवसादयेत्", meaning: "degrade" }
+      { word: "uddharet", meaning: "one must deliver" },
+      { word: "ātmanā", meaning: "by the mind" },
+      { word: "ātmānam", meaning: "the self" },
+      { word: "na", meaning: "never" },
+      { word: "ātmānam", meaning: "the self" },
+      { word: "avasādayet", meaning: "let down" },
+      { word: "ātmā", meaning: "the mind" },
+      { word: "eva", meaning: "certainly" },
+      { word: "hi", meaning: "indeed" },
+      { word: "ātmanaḥ", meaning: "of the self" },
+      { word: "bandhuḥ", meaning: "friend" },
+      { word: "ātmā", meaning: "the mind" },
+      { word: "eva", meaning: "certainly" },
+      { word: "ripuḥ", meaning: "enemy" },
+      { word: "ātmanaḥ", meaning: "of the self" }
     ],
     aiExplanation: {
-      simple: "Elevate yourself by your own mind, and do not degrade yourself. The mind is the friend of the self, and also the enemy.",
-      realLife: "This verse highlights the power of our mindset. By cultivating positive thoughts and self-discipline, we can overcome challenges and achieve our goals. Conversely, negative thinking can hold us back.",
-      spiritual: "The mind is a powerful tool that can either lead us to liberation or keep us bound to the material world. By controlling the mind, we can realize our true spiritual nature."
+      short: "This verse emphasizes the importance of self-elevation through the mind, as the mind can be both a friend and an enemy.",
+      long: "In this shloka, Lord Krishna advises Arjuna on the importance of using the mind to elevate oneself rather than degrade oneself. The mind can be a powerful tool for self-improvement and spiritual growth, but it can also be a source of bondage and suffering. By controlling and training the mind, one can become their own best friend, while allowing the mind to run wild can make it one's worst enemy. Therefore, it is crucial to cultivate positive thoughts and discipline the mind to achieve self-realization."
     }
   },
   {
@@ -183,20 +199,26 @@ export const popularShlokas: Shloka[] = [
     translations: {
       english: "But those who always worship Me with exclusive devotion, meditating on My transcendental form—to them I carry what they lack, and I preserve what they have.",
       hindi: "जो अनन्य भाव से मुझमें स्थित होकर निरन्तर मेरा चिन्तन करते हुए मेरी उपासना करते हैं, मैं उन नित्ययुक्त पुरुषों का योगक्षेम वहन करता हूँ।",
-      hinglish: "Jo ananya bhav se mujhme sthit hokar nirantar mera chintan karte hue meri upasana karte hain, main un nityayukta purushon ka yogakshem vahan karta hun."
+      hinglish: "Jo log sirf mujhe yaad karte rahte hain aur meri pooja karte hain, main unki zaruratein poori karta hun aur unka khayal rakhta hun."
     },
     wordMeanings: [
-      { word: "अनन्याः", meaning: "without any other thought" },
-      { word: "चिन्तयन्तः", meaning: "meditating" },
-      { word: "माम्", meaning: "upon Me" },
-      { word: "ये", meaning: "those who" },
-      { word: "जनाः", meaning: "persons" },
-      { word: "पर्युपासते", meaning: "properly worship" }
+      { word: "ananyāḥ", meaning: "without any other" },
+      { word: "chintayantaḥ", meaning: "meditating" },
+      { word: "mām", meaning: "upon Me" },
+      { word: "ye", meaning: "who" },
+      { word: "janāḥ", meaning: "persons" },
+      { word: "paryupāsate", meaning: "properly worship" },
+      { word: "teṣām", meaning: "of them" },
+      { word: "nitya", meaning: "always" },
+      { word: "abhiyuktānām", meaning: "engaged" },
+      { word: "yoga", meaning: "that which is lacking" },
+      { word: "kṣemam", meaning: "that which is needed" },
+      { word: "vahāmi", meaning: "I carry" },
+      { word: "aham", meaning: "I" }
     ],
     aiExplanation: {
-      simple: "Those who worship Me with exclusive devotion, always thinking of Me, I personally take care of their needs and preserve what they have.",
-      realLife: "This verse assures us that when we dedicate ourselves to a higher purpose, our needs will be taken care of. It encourages us to pursue our passions with faith and trust.",
-      spiritual: "Complete surrender and devotion to the divine brings about a sense of security and fulfillment. It signifies that the devotee is always under divine protection."
+      short: "This verse assures devotees that the Lord provides for those who worship Him with exclusive devotion.",
+      long: "In this shloka, Lord Krishna promises to take care of the needs of those who are exclusively devoted to Him. He personally provides what they lack (yoga) and preserves what they have (kshema). This assurance is meant to encourage unwavering faith and devotion towards the divine. By surrendering to the Lord and focusing one's mind on Him, devotees can be free from anxiety and be assured of His protection and care."
     }
   },
   {
@@ -208,20 +230,31 @@ export const popularShlokas: Shloka[] = [
     translations: {
       english: "I am time, the destroyer of all worlds, and I have come to destroy all people. With the exception of you [the Pandavas], all the soldiers here on both sides will be slain.",
       hindi: "मैं लोकों का नाश करने वाला बढ़ा हुआ काल हूँ और इस समय इन सब लोगों को नष्ट करने के लिए प्रवृत्त हुआ हूँ। तुम [पाण्डवों] के बिना भी, सामने की सेना में खड़े हुए ये सब योद्धा नहीं रहेंगे।",
-      hinglish: "Main lokon ka nash karne wala badha hua kal hun aur is samay in sab logon ko nasht karne ke liye pravritt hua hun. Tum [pandavon] ke bina bhi, samne ki sena mein khade hue ye sab yoddha nahin rahenge."
+      hinglish: "Main samay hun, jo duniya ko khatam karne aaya hun. Tumhare bina bhi, yahan khade saare yoddhe mar jaayenge."
     },
     wordMeanings: [
-      { word: "कालः", meaning: "time" },
-      { word: "अस्मि", meaning: "I am" },
-      { word: "लोकक्षयकृत्", meaning: "the destroyer of the worlds" },
-      { word: "प्रवृद्धः", meaning: "greatly grown" },
-      { word: "लोकान्", meaning: "all people" },
-      { word: "समाहर्तुम्", meaning: "to destroy" }
+      { word: "kālaḥ", meaning: "time" },
+      { word: "asmi", meaning: "I am" },
+      { word: "loka", meaning: "worlds" },
+      { word: "kṣaya-kṛt", meaning: "destroyer" },
+      { word: "pravṛddhaḥ", meaning: "greatly grown" },
+      { word: "lokān", meaning: "all people" },
+      { word: "samāhartum", meaning: "to destroy" },
+      { word: "iha", meaning: "in this world" },
+      { word: "pravṛttaḥ", meaning: "engaged" },
+      { word: "ṛte api", meaning: "without even" },
+      { word: "tvām", meaning: "you" },
+      { word: "na", meaning: "never" },
+      { word: "bhaviṣyanti", meaning: "will remain" },
+      { word: "sarve", meaning: "all" },
+      { word: "ye", meaning: "who" },
+      { word: "avasthitāḥ", meaning: "situated" },
+      { word: "pratyanīkeṣu", meaning: "on the opposite sides" },
+      { word: "yodhāḥ", meaning: "soldiers" }
     ],
     aiExplanation: {
-      simple: "I am Time, the destroyer of worlds, and I am here to destroy all people. Even without you, all these warriors arrayed for battle will not survive.",
-      realLife: "This verse reminds us of the impermanence of life and the inevitability of change. It encourages us to make the most of our time and focus on what truly matters.",
-      spiritual: "Time is an aspect of the divine that governs creation and destruction. Recognizing this helps us to accept the cycles of life and death and to surrender to the divine will."
+      short: "This verse reveals the Lord as time, the ultimate destroyer, who has come to annihilate all.",
+      long: "In this shloka, Lord Krishna, in His terrifying form, declares Himself to be time, the ultimate destroyer of all worlds. He reveals that He has come to annihilate all the warriors present on the battlefield, regardless of who wins or loses. This declaration emphasizes the transient nature of the material world and the inevitability of death. It also underscores the Lord's supreme power and control over the cosmic order."
     }
   },
   {
@@ -233,68 +266,25 @@ export const popularShlokas: Shloka[] = [
     translations: {
       english: "One who is not envious but is a kind friend to all living entities, who does not think himself a proprietor and is free from false ego, who is equal in both happiness and distress, and who is tolerant.",
       hindi: "जो किसी से द्वेष नहीं करता, सब प्राणियों का मित्र है, दयालु है, अहंकार और ममत्व से रहित है, सुख और दु:ख में समान रहता है और क्षमाशील है।",
-      hinglish: "Jo kisi se dwesh nahin karta, sab praniyon ka mitra hai, dayalu hai, ahankar aur mamatv se rahit hai, sukh aur du:kh mein saman rahta hai aur kshamashil hai."
+      hinglish: "Jo kisi se nafrat nahin karta, sabka dost hai, dayalu hai, ghamand nahin karta, khushi-gham mein same rahta hai aur maaf karne wala hai."
     },
     wordMeanings: [
-      { word: "अद्वेष्टा", meaning: "non-envious" },
-      { word: "सर्वभूतानाम्", meaning: "to all living entities" },
-      { word: "मैत्रः", meaning: "friendly" },
-      { word: "करुणः", meaning: "kind" },
-      { word: "एव", meaning: "certainly" },
-      { word: "च", meaning: "also" }
+      { word: "adveṣṭā", meaning: "nonenvious" },
+      { word: "sarva-bhūtānām", meaning: "to all living entities" },
+      { word: "maitraḥ", meaning: "friendly" },
+      { word: "karuṇaḥ", meaning: "kind" },
+      { word: "eva", meaning: "certainly" },
+      { word: "ca", meaning: "also" },
+      { word: "nirmamaḥ", meaning: "without sense of proprietorship" },
+      { word: "nirahaṅkāraḥ", meaning: "without false ego" },
+      { word: "sama", meaning: "equal" },
+      { word: "duḥkha", meaning: "distress" },
+      { word: "sukhaḥ", meaning: "happiness" },
+      { word: "kṣamī", meaning: "forgiving" }
     ],
     aiExplanation: {
-      simple: "One who is not envious, is a friend to all beings, is compassionate, free from possessiveness and ego, equal in happiness and distress, and forgiving.",
-      realLife: "These are qualities of a balanced and compassionate person. By cultivating these virtues, we can improve our relationships and contribute to a more harmonious society.",
-      spiritual: "These qualities are essential for spiritual growth. They help us to overcome selfishness and to connect with the divine in all beings."
-    }
-  },
-  {
-    id: "18.66",
-    chapter: 18,
-    verse: 66,
-    sanskrit: "सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज | अहं त्वां सर्वपापेभ्यो मोक्षयिष्यामि मा शुचः ||",
-    transliteration: "sarva-dharmān parityajya mām ekaṁ śaraṇaṁ vraja | ahaṁ tvāṁ sarva-pāpebhyo mokṣayiṣyāmi mā śucaḥ ||",
-    translations: {
-      english: "Abandon all varieties of religion and just surrender unto Me. I shall deliver you from all sinful reactions. Do not fear.",
-      hindi: "सम्पूर्ण धर्मों को त्याग कर केवल मेरी शरण में आओ, मैं तुम्हें समस्त पापों से मुक्त कर दूँगा, शोक मत करो।",
-      hinglish: "Sampurn dharmo ko tyag kar keval meri sharan mein aao, main tumhen samast papon se mukt kar dunga, shok mat karo."
-    },
-    wordMeanings: [
-      { word: "सर्वधर्मान्", meaning: "all kinds of religion" },
-      { word: "परित्यज्य", meaning: "abandoning" },
-      { word: "माम्", meaning: "unto Me" },
-      { word: "एकम्", meaning: "only" },
-      { word: "शरणम्", meaning: "surrender" },
-      { word: "व्रज", meaning: "go" }
-    ],
-    aiExplanation: {
-      simple: "Give up all your duties and surrender to Me alone. I will liberate you from all sins; do not grieve.",
-      realLife: "This verse encourages us to let go of our anxieties and trust in a higher power. It suggests that by surrendering our worries, we can find peace and guidance.",
-      spiritual: "This is a call for complete devotion and surrender to the divine. It promises liberation from the cycle of birth and death for those who take refuge in the Supreme Being."
+      short: "This verse describes the qualities of a devotee who is dear to the Lord.",
+      long: "In this shloka, Lord Krishna describes the qualities of a true devotee. Such a person is free from envy, is a kind friend to all, does not claim ownership over anything, is free from false ego, remains equipoised in happiness and distress, and is always forgiving. These qualities enable the devotee to transcend the material world and attain divine love. By cultivating these virtues, one can become dear to the Lord and achieve spiritual perfection."
     }
   }
 ];
-
-// Search function
-export const searchShlokas = (query: string): Shloka[] => {
-  const lowerQuery = query.toLowerCase();
-  return popularShlokas.filter(shloka => 
-    shloka.sanskrit.toLowerCase().includes(lowerQuery) ||
-    shloka.transliteration.toLowerCase().includes(lowerQuery) ||
-    shloka.translations.english.toLowerCase().includes(lowerQuery) ||
-    shloka.translations.hindi.toLowerCase().includes(lowerQuery) ||
-    shloka.translations.hinglish.toLowerCase().includes(lowerQuery) ||
-    shloka.wordMeanings.some(wm => wm.word.toLowerCase().includes(lowerQuery) || wm.meaning.toLowerCase().includes(lowerQuery)) ||
-    `chapter ${shloka.chapter}`.includes(lowerQuery) ||
-    `verse ${shloka.verse}`.includes(lowerQuery)
-  );
-};
-
-// Get daily shloka
-export const getDailyShlokas = (): Shloka[] => {
-  const today = new Date();
-  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
-  const index = dayOfYear % popularShlokas.length;
-  return [popularShlokas[index]];
-};
