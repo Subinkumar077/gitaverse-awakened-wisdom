@@ -1,3 +1,4 @@
+
 export interface Shloka {
   id: string;
   chapter: number;
@@ -18,7 +19,7 @@ export interface Shloka {
 
 export const searchShlokas = (query: string): Shloka[] => {
   const searchTerm = query.toLowerCase();
-  return shlokas.filter((shloka) => {
+  return popularShlokas.filter((shloka) => {
     return (
       shloka.sanskrit.toLowerCase().includes(searchTerm) ||
       shloka.transliteration.toLowerCase().includes(searchTerm) ||
@@ -28,6 +29,14 @@ export const searchShlokas = (query: string): Shloka[] => {
       `${shloka.chapter}.${shloka.verse}`.includes(searchTerm)
     );
   });
+};
+
+export const getDailyShlokas = (): Shloka[] => {
+  // Return a random shloka for daily display
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+  const index = dayOfYear % popularShlokas.length;
+  return [popularShlokas[index]];
 };
 
 export const popularShlokas: Shloka[] = [
@@ -68,7 +77,7 @@ export const popularShlokas: Shloka[] = [
     chapter: 2,
     verse: 47,
     sanskrit: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन | मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि ||",
-    transliteration: "karmaṇy-evādhikāras te mā phaleṣu kadācana mā karma-phala-hetur bhūr mā te saṅgo ’stv akarmaṇi",
+    transliteration: "karmaṇy-evādhikāras te mā phaleṣu kadācana mā karma-phala-hetur bhūr mā te saṅgo 'stv akarmaṇi",
     translations: {
       english: "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action. Never consider yourself the cause of the results of your activities, and never be attached to not doing your duty.",
       hindi: "तेरा कर्म करने में ही अधिकार है, उसके फलों में कभी नहीं। इसलिए तू कर्मों के फल का हेतु मत बन और तेरी कर्म न करने में भी आसक्ति न हो।",
