@@ -84,7 +84,7 @@
   }
 
   body {
-    @apply bg-gradient-to-br from-orange-50 via-yellow-50 to-blue-50 text-foreground font-inter;
+    @apply bg-gradient-to-br from-orange-50 via-yellow-50 to-blue-50 dark:from-gray-900 dark:via-purple-900 dark:to-blue-900 text-foreground font-inter;
     min-height: 100vh;
   }
 }
@@ -103,7 +103,7 @@
   }
   
   .glass-card {
-    @apply backdrop-blur-xl bg-white/20 border border-white/30 shadow-xl;
+    @apply backdrop-blur-xl bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700/30 shadow-xl;
   }
   
   .spiritual-gradient {
@@ -115,6 +115,15 @@
       rgba(33, 150, 243, 0.1) 100%);
   }
   
+  .dark .spiritual-gradient {
+    background: linear-gradient(135deg, 
+      rgba(15, 23, 42, 0.8) 0%, 
+      rgba(30, 41, 59, 0.8) 25%, 
+      rgba(51, 65, 85, 0.8) 50%, 
+      rgba(71, 85, 105, 0.8) 75%, 
+      rgba(100, 116, 139, 0.8) 100%);
+  }
+  
   .text-spiritual {
     background: linear-gradient(135deg, #FF6B35, #F7931E, #FFD23F);
     -webkit-background-clip: text;
@@ -123,7 +132,7 @@
   }
   
   .shloka-card {
-    @apply glass-card rounded-2xl p-6 hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:bg-white/30;
+    @apply glass-card rounded-2xl p-6 hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] hover:bg-white/30 dark:hover:bg-gray-800/30;
   }
   
   .ripple {
@@ -132,7 +141,7 @@
   
   .ripple::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent;
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-gray-400/20 to-transparent;
     transform: translateX(-100%);
     transition: transform 0.6s ease;
   }
